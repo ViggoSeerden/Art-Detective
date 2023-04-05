@@ -2,6 +2,7 @@ package com.artdetective.androids4sv
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Resources.Theme
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -13,6 +14,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -20,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,9 +33,13 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.artdetective.androids4sv.TensorFLowHelper.imageSize
+import com.artdetective.androids4sv.ui.theme.Music
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import com.artdetective.androids4sv.ui.theme.*
+import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.layout.ContentScale
 
 class MainActivity : ComponentActivity() {
 
@@ -66,7 +73,7 @@ class MainActivity : ComponentActivity() {
     ) { isGranted ->
         if (isGranted) {
             Log.i("kilo", "Permission granted")
-            shouldShowCamera.value = true
+            shouldShowCamera.value = false
         } else {
             Log.i("kilo", "Permission denied")
         }
@@ -123,7 +130,7 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.i("kilo", "Permission previously granted")
-                shouldShowCamera.value = true
+                shouldShowCamera.value = false
             }
 
             ActivityCompat.shouldShowRequestPermissionRationale(
@@ -159,18 +166,67 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun CamButton() {
         Box(
-            contentAlignment = Alignment.BottomCenter,
             modifier = Modifier
                 .fillMaxSize()
-//                .border(width = 1.dp, Color.Green)
-        ) {
-            Button(
-                onClick = { changeData() },
-                colors = ButtonDefaults
-                    .buttonColors(backgroundColor = Color.Black, contentColor = Color.White)
+//              .border(width = 1.dp, Color.Green)
+        ) {val painter: Painter = rememberImagePainter(
+                data = R.drawable.monalisa,
+                builder = {
+                    // Set any additional options for loading the image, such as resizing or caching
+                }
+            )
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
             ) {
-                Text(text = "Take Picture")
+                Box(
+                    contentAlignment = Alignment.TopCenter,
+                    modifier = Modifier
+                ) {
+                    Button(
+                        onClick = { changeData() },
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Art, contentColor = Color.White)
+
+                    ) {
+                        Text(text = "Art")
+                    }
+                }
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                ) {
+                    Button(
+                        onClick = { changeData() },
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Sculptures, contentColor = Color.White)
+                    ) {
+                        Text(text = "Sculptures")
+                    }
+                }
+                Box(
+                    contentAlignment = Alignment.BottomCenter,
+                    modifier = Modifier
+                ) {
+                    Button(
+
+                        onClick = {},
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Music, contentColor = Color.White)
+                    ) {
+                        Text(text = "Music")
+                    }
+                }
+
             }
+
         }
     }
 
