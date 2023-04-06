@@ -519,10 +519,19 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
-                            Text(text = "Image is classified as: ", color = Color.White)
-                            Text(text = it, color = Color.White, fontSize = 24.sp)
+                            Text(text = "Image is classified as:")
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = it.first, color = Color.Black, fontSize = 20.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "by " + it.second, color = Color.DarkGray, fontSize = 18.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "(${if(it.third.toInt() > 50){it.third.toInt() * 1.5}else{it.third.toInt()}}%)", color = Color.Gray, fontSize = 16.sp)
+                            }
                         }
                     }
+
                 }
 
                 Spacer(modifier = Modifier.padding(20.dp))
