@@ -519,7 +519,7 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
-                            Text(text = "Image is classified as:", color = Color.White)
+                            Text(text = "Image is classified as: ", color = Color.White)
                             Text(text = it, color = Color.White, fontSize = 24.sp)
                         }
                     }
