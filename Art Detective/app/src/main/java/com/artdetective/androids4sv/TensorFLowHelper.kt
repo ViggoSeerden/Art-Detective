@@ -15,7 +15,7 @@ object TensorFLowHelper {
     val imageSize = 224
 
     @Composable
-    fun classifyImage(image: Bitmap, callback : (@Composable (Pair<String, Float>) -> Unit)) {
+    fun classifyImage(image: Bitmap, callback : (@Composable (Triple<String, String, Float>) -> Unit)) {
         val model: Model = Model.newInstance(LocalContext.current)
 
         // Creates inputs for reference.
@@ -60,10 +60,13 @@ object TensorFLowHelper {
             }
         }
         val confidencePercentage = maxConfidence.toInt()
-        val classes = arrayOf("Birth of Venus by Sandro Botticelli", "Creation of Adam by Michelangelo Buonarroti", "Guernica by Pablo Picasso",
-            "Kiss by Gustav Klimt", "Las Meninas by Diego Velázquez", "Last Supper by Leonardo da Vinci", "Mona Lisa by Leonardo da Vinci",
-            "Night Watch by Rembrandt van Rijn", "Scream by Edvard Munch", "Starry Night by Vincent van Gogh")
-        callback.invoke(Pair(classes[maxPos], maxConfidence))
+        val classes = arrayOf("Birth of Venus", "Creation of Adam", "Guernica",
+            "Kiss", "Las Meninas", "Last Supper", "Mona Lisa",
+            "Night Watch", "Scream", "Starry Night")
+        val artists = arrayOf("Sandro Botticelli", "Michelangelo Buonarroti", "Pablo Picasso",
+            "Gustav Klimt", "Diego Velázquez", "Leonardo da Vinci", "Leonardo da Vinci",
+            "Rembrandt van Rijn", "Edvard Munch", "Vincent van Gogh")
+        callback.invoke(Triple(classes[maxPos], artists[maxPos], maxConfidence))
 
         // Releases model resources if no longer used.
         model.close()

@@ -325,8 +325,13 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text(text = "Image is classified as:")
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = it.first, color = Color.Black, fontSize = 24.sp)
-                                Text(text = "(${if(it.second.toInt() > 50){it.second.toInt() * 1.5}else{it.second.toInt()}}%)", color = Color.Gray, fontSize = 16.sp)
+                                Text(text = it.first, color = Color.Black, fontSize = 20.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "by " + it.second, color = Color.DarkGray, fontSize = 18.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "(${if(it.third.toInt() > 50){it.third.toInt() * 1.5}else{it.third.toInt()}}%)", color = Color.Gray, fontSize = 16.sp)
                             }
                         }
                     }
