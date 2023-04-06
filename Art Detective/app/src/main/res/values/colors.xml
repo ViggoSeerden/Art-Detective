@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="art">#FF85591C</color>
+    <color name="sculptures">#FF9C451F</color>
+    <color name="music">#FFB58833</color>
 </resources>

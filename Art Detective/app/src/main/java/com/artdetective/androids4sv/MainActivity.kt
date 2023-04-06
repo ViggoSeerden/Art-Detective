@@ -12,14 +12,20 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,9 +36,13 @@ import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.artdetective.androids4sv.TensorFLowHelper.imageSize
+import com.artdetective.androids4sv.ui.theme.Music
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import com.artdetective.androids4sv.ui.theme.*
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 
 class MainActivity : ComponentActivity() {
 
@@ -66,7 +76,7 @@ class MainActivity : ComponentActivity() {
     ) { isGranted ->
         if (isGranted) {
             Log.i("kilo", "Permission granted")
-            shouldShowCamera.value = true
+            shouldShowCamera.value = false
         } else {
             Log.i("kilo", "Permission denied")
         }
@@ -93,7 +103,7 @@ class MainActivity : ComponentActivity() {
                 Image(
                     painter = rememberImagePainter(photoUri),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
                 )
 
                 Log.e("knskrt", "$photoUri")
@@ -123,7 +133,7 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.i("kilo", "Permission previously granted")
-                shouldShowCamera.value = true
+                shouldShowCamera.value = false
             }
 
             ActivityCompat.shouldShowRequestPermissionRationale(
@@ -156,21 +166,188 @@ class MainActivity : ComponentActivity() {
         cameraExecutor.shutdown()
     }
 
+
     @Composable
     fun CamButton() {
         Box(
-            contentAlignment = Alignment.BottomCenter,
             modifier = Modifier
                 .fillMaxSize()
-//                .border(width = 1.dp, Color.Green)
-        ) {
-            Button(
-                onClick = { changeData() },
-                colors = ButtonDefaults
-                    .buttonColors(backgroundColor = Color.Black, contentColor = Color.White)
+//              .border(width = 1.dp, Color.Green)
+        ) {val painter: Painter = rememberImagePainter(
+                data = R.drawable.monalisa,
+
+            )
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Text(text = "Take Picture")
+                Box(
+                    contentAlignment = Alignment.TopCenter,
+                    modifier = Modifier
+                ) {
+                    Text(
+                        text = "Which one do you want to check?",
+                        color = Color.White,
+                        fontSize = 20.sp,
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                    )
+                }
+                Box(
+                    contentAlignment = Alignment.TopCenter,
+                    modifier = Modifier
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(280.dp)
+                            .height(120.dp)
+                            .padding(10.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        onClick = { changeData() },
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Art, contentColor = Color.White)
+
+                    ) {
+                        Text(text = "Art")
+                    }
+                }
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(280.dp)
+                            .height(120.dp)
+                            .padding(10.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        onClick = { changeData() },
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Sculptures, contentColor = Color.White)
+                    ) {
+                        Text(text = "Sculptures")
+                    }
+                }
+                Box(
+                    contentAlignment = Alignment.BottomCenter,
+                    modifier = Modifier
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .width(280.dp)
+                            .height(120.dp)
+                            .padding(10.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        onClick = {},
+                        colors = ButtonDefaults
+                            .buttonColors(backgroundColor = Music, contentColor = Color.White)
+                    ) {
+                        Text(text = "Music")
+                    }
+                }
+                Row(verticalAlignment = Alignment.Bottom,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                ) {
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(Icons.Default.Home,
+                                "Home",
+                                tint = Color.White,)
+                            Text(
+                                text = "Home",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(Icons.Default.Search,
+                                "Search",
+                                tint = Color.White,)
+                            Text(
+                                text = "Search",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(Icons.Default.ShoppingCart,
+                                "Shop",
+                                tint = Color.White,)
+                            Text(
+                                text = "Shop",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(Icons.Default.AccountCircle,
+                                "Profile",
+                                tint = Color.White,)
+                            Text(
+                                text = "Profile",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
             }
+
         }
     }
 
@@ -180,35 +357,51 @@ class MainActivity : ComponentActivity() {
             contentAlignment = Alignment.BottomCenter,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(bottom = 60.dp)
 //                .border(width = 1.dp, Color.Green)
         ) {
-            Row() {
-                Button(
+            Row(horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()) {
+                Button(modifier = Modifier
+                    .width(105.dp)
+                    .height(60.dp),
                     onClick = { toggleCropper() },
                     colors = ButtonDefaults
-                        .buttonColors(backgroundColor = Color.Black, contentColor = Color.White)
+                        .buttonColors(backgroundColor = Art, contentColor = Color.White)
                 ) {
-                    Text(text = "Crop Image")
+                    Text(text = "Crop Image",fontSize = 16.sp, textAlign = TextAlign.Center)
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(7.dp))
                 Button(
+                    modifier = Modifier
+                        .width(105.dp)
+                        .height(60.dp),
                     onClick = { croppedPhotoUri = photoUri
                         toggleClassifier() },
                     colors = ButtonDefaults
-                        .buttonColors(backgroundColor = Color.Black, contentColor = Color.White)
+                        .buttonColors(backgroundColor = Sculptures, contentColor = Color.White)
                 ) {
-                    Text(text = "Classify Image")
+                    Text(text = "Classify Image", fontSize = 16.sp, textAlign = TextAlign.Center)
                 }
-                Spacer(modifier = Modifier.padding(20.dp))
-                Button(
+                Spacer(modifier = Modifier.padding(7.dp))
+                Button(modifier = Modifier
+                    .width(105.dp)
+                    .height(60.dp),
                     onClick = { changeData() },
                     colors = ButtonDefaults
-                        .buttonColors(backgroundColor = Color.Black, contentColor = Color.White)
+                        .buttonColors(backgroundColor = Music, contentColor = Color.White)
                 ) {
-                    Text(text = "Retake Photo")
+                    Text(text = "Retake Photo", fontSize = 16.sp, textAlign = TextAlign.Center)
                 }
             }
         }
+    }
+
+    private fun changeToHome() {
+        shouldShowCamera.value = false
+        shouldShowPhoto.value = false
+        showImageCropper.value = false
+        showImageClassifier.value = false
     }
 
     //Onclick of CamButton
@@ -289,7 +482,9 @@ class MainActivity : ComponentActivity() {
 
         Scaffold(modifier = Modifier.fillMaxSize()) {
             Column(
-                Modifier.fillMaxSize(),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = Sculptures),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -314,7 +509,7 @@ class MainActivity : ComponentActivity() {
                         contentDescription = "Image from the gallery",
                         Modifier.size(400.dp)
                     )
-                    Spacer(modifier = Modifier.padding(20.dp))
+                    Spacer(modifier = Modifier.padding(5.dp))
 
                     val scaledBitmap = Bitmap.createScaledBitmap(it, imageSize, imageSize, false);
                     TensorFLowHelper.classifyImage(scaledBitmap) {
@@ -323,6 +518,7 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+
                             Text(text = "Image is classified as:")
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(text = it.first, color = Color.Black, fontSize = 20.sp)
@@ -340,10 +536,120 @@ class MainActivity : ComponentActivity() {
 
                 Spacer(modifier = Modifier.padding(20.dp))
 
-                Button(onClick = {
-                    changeData()
-                }, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = { changeData() },
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(60.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults
+                        .buttonColors(backgroundColor = Color.Black,
+                            contentColor = Color.White)) {
                     Text(text = "Take Another Photo")
+                }
+
+                Spacer(modifier = Modifier.padding(22.dp))
+
+                Row(verticalAlignment = Alignment.Bottom,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                ) {
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = {changeToHome()}
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Home,
+                                "Home",
+                                tint = Color.White,
+                            )
+                            Text(
+                                text = "Home",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Search,
+                                "Search",
+                                tint = Color.White,
+                            )
+                            Text(
+                                text = "Search",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.ShoppingCart,
+                                "Shop",
+                                tint = Color.White,
+                            )
+                            Text(
+                                text = "Shop",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                    OutlinedButton(
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent),
+                        border = BorderStroke(2.dp, Color.White),
+                        shape = RoundedCornerShape(0.dp),
+                        modifier = Modifier
+                            .height(80.dp)
+                            .width(90.dp),
+                        onClick = { Log.e("wow", "Hello") }
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.AccountCircle,
+                                "Profile",
+                                tint = Color.White,
+                            )
+                            Text(
+                                text = "Profile",
+                                fontSize = 12.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
                 }
             }
         }
