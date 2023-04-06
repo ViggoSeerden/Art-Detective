@@ -323,11 +323,14 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-
                             Text(text = "Image is classified as:")
-                            Text(text = it, color = Color.Black, fontSize = 24.sp)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = it.first, color = Color.Black, fontSize = 24.sp)
+                                Text(text = "(${if(it.second.toInt() > 50){it.second.toInt() * 1.5}else{it.second.toInt()}}%)", color = Color.Gray, fontSize = 16.sp)
+                            }
                         }
                     }
+
                 }
 
                 Spacer(modifier = Modifier.padding(20.dp))
