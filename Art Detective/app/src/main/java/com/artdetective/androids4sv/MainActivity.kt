@@ -215,7 +215,7 @@ class MainActivity : ComponentActivity() {
                             .buttonColors(backgroundColor = Art, contentColor = Color.White)
 
                     ) {
-                        Text(text = "Art")
+                        Text(text = "Art", fontSize = 20.sp)
                     }
                 }
                 Box(
@@ -232,7 +232,7 @@ class MainActivity : ComponentActivity() {
                         colors = ButtonDefaults
                             .buttonColors(backgroundColor = Sculptures, contentColor = Color.White)
                     ) {
-                        Text(text = "Sculptures")
+                        Text(text = "Sculptures", fontSize = 20.sp)
                     }
                 }
                 Box(
@@ -249,7 +249,7 @@ class MainActivity : ComponentActivity() {
                         colors = ButtonDefaults
                             .buttonColors(backgroundColor = Music, contentColor = Color.White)
                     ) {
-                        Text(text = "Music")
+                        Text(text = "Music", fontSize = 20.sp)
                     }
                 }
                 Row(verticalAlignment = Alignment.Bottom,
