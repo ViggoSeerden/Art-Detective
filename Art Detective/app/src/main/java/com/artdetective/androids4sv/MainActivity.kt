@@ -519,22 +519,22 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
 
-                            Text(text = "Image is classified as:")
+                            Text(text = "Image is classified as:" , color = Color.White)
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = it.first, color = Color.Black, fontSize = 20.sp)
+                                Text(text = it.first, color = Color.White, fontSize = 20.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = "by " + it.second, color = Color.DarkGray, fontSize = 18.sp)
+                                Text(text = "by " + it.second, color = Color.White, fontSize = 18.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = "(${if(it.third.toInt() > 50){it.third.toInt() * 1.5}else{it.third.toInt()}}%)", color = Color.Gray, fontSize = 16.sp)
+                                Text(text = "(${if(it.third.toInt() > 50){it.third.toInt() * 1.5}else{it.third.toInt()}}%)", color = Color.LightGray, fontSize = 16.sp)
                             }
                         }
                     }
 
                 }
 
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(11.dp))
 
                 Button(onClick = { changeData() },
                     modifier = Modifier
@@ -547,7 +547,7 @@ class MainActivity : ComponentActivity() {
                     Text(text = "Take Another Photo")
                 }
 
-                Spacer(modifier = Modifier.padding(22.dp))
+                Spacer(modifier = Modifier.padding(11.dp))
 
                 Row(verticalAlignment = Alignment.Bottom,
                     modifier = Modifier
